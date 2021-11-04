@@ -1,7 +1,6 @@
 package kata4.main;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import kata4.model.Histogram;
 import kata4.model.Mail;
@@ -11,19 +10,34 @@ import kata4.view.MailListReader;
 
 public class Kata4 {
     
+    static String fileName;
+    static List<Mail> mailList;
+    static Histogram<String> histogram;
+    
     public static void main(String[] args) throws FileNotFoundException {
-        
-        String fileName = "email.txt";
-        
-        List<Mail> mailList;
+        fileName = "email.txt";
+        execute();
+    }
+    
+    private static void execute() throws FileNotFoundException{
+        input();
+        process();
+        output();
+    }
+    
+    private static void input() throws FileNotFoundException{
         MailListReader reader = new MailListReader();
-        MailHistogramBuilder builder = new MailHistogramBuilder();
-        
         mailList = reader.read(fileName);
-        
-        Histogram<String> histogram = builder.build(mailList);
+    }
+    
+    private static void process(){
+        MailHistogramBuilder builder = new MailHistogramBuilder();        
+        histogram = builder.build(mailList);
+    }
+    
+    private static void output(){
         HistogramDisplay display = new HistogramDisplay(histogram);
         display.execute();
     }
-    
+ 
 }
